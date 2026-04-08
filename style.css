@@ -8,11 +8,28 @@
     --bg: #0a0a0a;
     --bg-light: #141414;
     --bg-card: #1a1a1a;
+    --bg-card-hover: #222;
     --text: #e0e0e0;
     --text-dim: #888;
     --accent: #6c63ff;
     --accent-glow: rgba(108, 99, 255, 0.3);
     --green: #4caf50;
+    --border: #222;
+    --nav-bg: rgba(10, 10, 10, 0.9);
+}
+
+[data-theme="light"] {
+    --bg: #f5f5f5;
+    --bg-light: #e8e8e8;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f0f0f0;
+    --text: #1a1a1a;
+    --text-dim: #666;
+    --accent: #6c63ff;
+    --accent-glow: rgba(108, 99, 255, 0.2);
+    --green: #388e3c;
+    --border: #ddd;
+    --nav-bg: rgba(245, 245, 245, 0.9);
 }
 
 body {
@@ -20,6 +37,19 @@ body {
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Fade in animations */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Nav */
@@ -27,10 +57,11 @@ nav {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(10, 10, 10, 0.9);
+    background: var(--nav-bg);
     backdrop-filter: blur(10px);
     z-index: 100;
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
 }
 
 .nav-container {
@@ -72,6 +103,21 @@ nav {
     border-radius: 8px;
 }
 
+.theme-toggle {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 1.2rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.theme-toggle:hover {
+    border-color: var(--accent);
+}
+
 /* Hero */
 .hero {
     min-height: 100vh;
@@ -106,6 +152,16 @@ nav {
     color: var(--accent);
 }
 
+.cursor {
+    color: var(--accent);
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
 .hero-desc {
     color: var(--text-dim);
     font-size: 1.2rem;
@@ -117,6 +173,7 @@ nav {
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
+    margin-bottom: 3rem;
 }
 
 .btn-primary {
@@ -126,25 +183,113 @@ nav {
     border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
-    transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s, transform 0.2s;
 }
 
 .btn-primary:hover {
     box-shadow: 0 0 20px var(--accent-glow);
+    transform: translateY(-2px);
 }
 
 .btn-secondary {
-    border: 1px solid #333;
+    border: 1px solid var(--border);
     color: var(--text);
     padding: 0.8rem 2rem;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, transform 0.2s;
 }
 
 .btn-secondary:hover {
     border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent);
+}
+
+.stat-plus {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+}
+
+.stat p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+/* How it works */
+.how {
+    padding: 5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.step {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    flex: 1;
+    max-width: 280px;
+    transition: border-color 0.3s, transform 0.3s;
+}
+
+.step:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0 auto 1rem;
+}
+
+.step h3 {
+    margin-bottom: 0.5rem;
+}
+
+.step p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+.step-arrow {
+    font-size: 2rem;
+    color: var(--accent);
 }
 
 /* Sections */
@@ -169,7 +314,7 @@ h2 {
 
 .service-card {
     background: var(--bg-card);
-    border: 1px solid #222;
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 2rem;
     transition: border-color 0.3s, transform 0.3s;
@@ -201,6 +346,40 @@ h2 {
     font-size: 0.9rem;
 }
 
+/* Skills */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.skill-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: border-color 0.3s, transform 0.3s;
+}
+
+.skill-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+}
+
+.skill-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.skill-item span {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-weight: 600;
+}
+
 /* Projects */
 .projects-grid {
     display: grid;
@@ -210,14 +389,33 @@ h2 {
 
 .project-card {
     background: var(--bg-card);
-    border: 1px solid #222;
+    border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 2rem;
-    transition: border-color 0.3s;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
 }
 
 .project-card:hover {
     border-color: var(--accent);
+    transform: translateY(-4px);
+}
+
+.project-img {
+    height: 160px;
+    background: linear-gradient(135deg, var(--bg-light), var(--bg-card));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.project-img-placeholder {
+    font-size: 4rem;
+    opacity: 0.3;
+}
+
+.project-body {
+    padding: 1.5rem;
 }
 
 .project-header {
@@ -251,7 +449,7 @@ h2 {
 
 .project-tech span {
     background: var(--bg-light);
-    border: 1px solid #333;
+    border: 1px solid var(--border);
     padding: 0.2rem 0.7rem;
     border-radius: 6px;
     font-size: 0.8rem;
@@ -263,10 +461,78 @@ h2 {
     text-decoration: none;
     font-weight: 600;
     font-size: 0.9rem;
+    transition: gap 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
 }
 
 .project-link:hover {
     text-decoration: underline;
+    gap: 0.6rem;
+}
+
+/* Testimonials */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.testimonial-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+}
+
+.testimonial-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+}
+
+.stars {
+    color: #ffc107;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.testimonial-card > p {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.author-avatar {
+    width: 40px;
+    height: 40px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.testimonial-author strong {
+    display: block;
+    font-size: 0.9rem;
+}
+
+.testimonial-author span {
+    color: var(--text-dim);
+    font-size: 0.8rem;
 }
 
 /* Contact */
@@ -290,12 +556,13 @@ h2 {
 
 .contact-card {
     background: var(--bg-card);
-    border: 1px solid #222;
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 2rem;
     text-decoration: none;
     color: var(--text);
     transition: border-color 0.3s, transform 0.3s;
+    cursor: pointer;
 }
 
 .contact-card:hover {
@@ -316,7 +583,7 @@ h2 {
 footer {
     text-align: center;
     padding: 2rem;
-    border-top: 1px solid #222;
+    border-top: 1px solid var(--border);
     color: var(--text-dim);
     font-size: 0.85rem;
 }
@@ -337,5 +604,29 @@ footer {
 
     section {
         padding: 3rem 1.5rem;
+    }
+
+    .stats {
+        gap: 1.5rem;
+    }
+
+    .stat-number {
+        font-size: 1.8rem;
+    }
+
+    .steps {
+        flex-direction: column;
+    }
+
+    .step-arrow {
+        transform: rotate(90deg);
+    }
+
+    .step {
+        max-width: 100%;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     }
 }
